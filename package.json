@@ -11,7 +11,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "NODE_OPTIONS='--localstorage-file=.localstorage' jest",
-    "migrate": "node-pg-migrate up -m db/migrations -j sql",
+    "migrate": "node-pg-migrate up -m db/migrations",
+    "migrate:down": "node-pg-migrate down -m db/migrations",
     "migrate:create": "node-pg-migrate create -m db/migrations -j sql"
   },
   "dependencies": {
