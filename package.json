@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",
@@ -13,11 +13,17 @@
     "test": "NODE_OPTIONS='--localstorage-file=.localstorage' jest",
     "migrate": "node-pg-migrate up -m db/migrations",
     "migrate:down": "node-pg-migrate down -m db/migrations",
-    "migrate:create": "node-pg-migrate create -m db/migrations -j sql"
+    "migrate:create": "node-pg-migrate create -m db/migrations -j sql",
+    "seed": "ts-node src/seed.ts",
+    "create-key": "ts-node src/create-key.ts",
+    "test:db": "dropdb --if-exists performance_analytics_test && createdb performance_analytics_test && DATABASE_URL=postgres://localhost:5432/performance_analytics_test node-pg-migrate up -m db/migrations",
+    "seed:prod": "node dist/seed.js",
+    "create-key:prod": "node dist/create-key.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "node-pg-migrate": "^8.0.4",
     "pg": "^8.21.0"
   },
   "devDependencies": {
@@ -26,9 +32,14 @@
     "@types/node": "^25.9.2",
     "@types/pg": "^8.20.0",
     "jest": "^30.4.2",
-    "node-pg-migrate": "^8.0.4",
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "bin": {
+    "jump": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
